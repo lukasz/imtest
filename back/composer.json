@@ -1,0 +1,24 @@
+{
+    "name": "itech/recipe-api",
+    "type": "api",
+    "description": "Recipe API for Coding Test",
+    "authors": [
+        {
+            "name": "iTech Media",
+            "email": "engineering@itech.media"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "RecipeApi\\": "src/"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^7.0",
+        "slim/slim": "4.*",
+        "guzzlehttp/psr7": "^1.6",
+        "http-interop/http-factory-guzzle": "^1.0",
+        "ext-json": "*",
+        "ext-pdo": "*"
+    }
+}

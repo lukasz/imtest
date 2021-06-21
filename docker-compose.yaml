@@ -1,0 +1,18 @@
+version: '3'
+services:
+  back:
+    build: 
+      context: .
+      dockerfile: ./back/Dockerfile
+    volumes:
+      - ./back:/var/www/html:z
+    ports:
+      - '5000:5000'
+  front:
+    build: 
+      context: .
+      dockerfile: ./front/Dockerfile
+    volumes:
+      - ./front:/var/www/html:z
+    ports:
+      - '3000:8080'

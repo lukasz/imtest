@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>RecipeAPI</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <!-- FontAwesome JS -->
+    <script defer src="assets/fontawesome/js/all.js"></script>
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="assets/plugins/prism/prism.css">
+    <link rel="stylesheet" href="assets/plugins/elegant_font/css/style.css">
+
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
+
+</head>
+
+<body class="body-green">
+<div class="page-wrapper">
+    <!-- ******Header****** -->
+    <header id="header" class="header">
+        <div class="container">
+            <div class="branding">
+                <h1 class="logo">
+                    <a href="index.html">
+                        <span aria-hidden="true" class="icon_documents_alt icon"></span>
+                        <span class="text-highlight">Recipe</span><span class="text-bold">API</span>
+                    </a>
+                </h1>
+
+            </div><!--//branding-->
+
+        </div><!--//container-->
+    </header><!--//header-->
+    <div class="doc-wrapper">
+        <div class="container">
+            <div id="doc-header" class="doc-header text-center">
+                <h1 class="doc-title"><i class="icon fa fa-paper-plane"></i> Quick Start</h1>
+            </div><!--//doc-header-->
+            <div class="doc-body row">
+                <div class="doc-content col-md-12 col-12 order-1">
+                    <div class="content-inner">
+                        <section id="download-section" class="doc-section">
+                            <h2 class="section-title">Authorization</h2>
+                            <div class="section-block">
+                                <p>Authorization is done via a simple 'Authorization' header that needs to contain MD5 encoded URI of the request.</p>
+                                <div class="code-block">
+                                    <h6>Authorization header example for URI http://localhost:5000/recipes/raw</h6>
+                                    <p><code>Authorization: aa99d10d347eeea13e7959be4320b0c1</code></p>
+                                    <p>Endpoints that reqire authorization are tagged by [AUTHORIZED].</p>
+                                    <p>The <code>/recipes</code> endpoint is marked as [OPEN] and does not require authorization.</p>
+                                </div>
+                            </div>
+                        </section><!--//doc-section-->
+
+                        <section id="code-section" class="doc-section">
+                            <h2 class="section-title">Endpoints</h2>
+                            <div class="section-block">
+                                <h3>[AUTHORIZED] <code>POST /recipes/raw</code></h3>
+                                <p>
+                                    Returns raw recipes data. Takes two 'form-data' arguments:
+                                </p>
+                                <p>
+                                    <code>offset</code> - integer lower limit index of the recipe collection
+                                </p>
+                                <p>
+                                    <code>limit</code> - integer upper limit of the recipe count
+                                </p>
+                                <p>
+                                    By default 'offset' is set to 0 and 'limit' to 20.
+                                </p>
+                                <div class="code-block">
+                                    <h6>Response payload exapmple for offset == 0 and limit == 2</h6>
+                                    <pre><code class="language-javascript">[
+    {
+        "id": "1",
+        "name": "Caramel Pretzel Chocolate Chip Cookies",
+        "servings": "12",
+        "description": "",
+        "thumb": "https://img.buzzfeed.com/video-api-prod/assets/545dd684ec2e4ce1ba12afec4b6dbc59/BFV15930_CaramelPretzel_ChocolateChipCookies-Thumb1080.jpg",
+        "time": ""
+    },
+    {
+        "id": "2",
+        "name": "The Best Soft And Chewy Snickerdoodle Cookies",
+        "servings": "24",
+        "description": "",
+        "thumb": "https://img.buzzfeed.com/thumbnailer-prod-us-east-1/video-api/assets/96041.jpg",
+        "time": ""
+    }
+]</code></pre>
+                                </div><!--//code-block-->
+
+                            </div><!--//section-block-->
+
+                            <div class="section-block">
+                                <h3>[AUTHORIZED] <code>POST /ingredients/raw</code></h3>
+                                <p>
+                                    Returns raw ingredients data for given set of recipes. Takes a list of recipe ids as input. Recipe ids should be passed as text in POST request body as JSON encoded array, as shown in example below.
+                                </p>
+                                <p>
+                                    <code class="language-javascript">[1,2,3]</code>
+                                </p>
+                                <div class="code-block">
+                                    <h6>Response payload example for ids [1,2]</h6>
+                                    <pre><code class="language-javascript">[
+    {
+        "id": "1",
+        "recipe_id": "1",
+        "name": "all-purpose flour",
+        "unitName": "cup",
+        "unitAbbreviation": "c",
+        "unitSystem": "imperial",
+        "quantity": "2.0",
+        "text": "2 cups all-purpose flour"
+    },
+    {
+        "id": "2",
+        "recipe_id": "1",
+        "name": "baking soda",
+        "unitName": "teaspoon",
+        "unitAbbreviation": "tsp",
+        "unitSystem": "imperial",
+        "quantity": "1.0",
+        "text": "1 teaspoon baking soda"
+    },
+
+    ...
+
+    {
+        "id": "21",
+        "recipe_id": "2",
+        "name": "salt",
+        "unitName": "teaspoon",
+        "unitAbbreviation": "tsp",
+        "unitSystem": "imperial",
+        "quantity": "½",
+        "text": "¼ teaspoon salt"
+    }
+]</code></pre>
+                                </div><!--//code-block-->
+
+                            </div>
+
+                            <div class="section-block">
+                                <h3>[AUTHORIZED] <code>POST /instructions/raw</code></h3>
+                                <p>
+                                    Returns raw instructions data for given set of recipes. Takes a list of recipe ids as input. Recipe ids should be passed as text in POST request body as JSON encoded array, as shown in example below.
+                                </p>
+                                <p>
+                                    <code class="language-javascript">[1,2,3]</code>
+                                </p>
+                                <div class="code-block">
+                                    <h6>Response payload exapmple for ids [1,2]</h6>
+                                    <pre><code class="language-javascript">[
+    {
+        "id": "1",
+        "recipe_id": "1",
+        "appliance": "oven",
+        "position": "1",
+        "temperature": "400",
+        "text": "Preheat the oven to 400°F (200°C)."
+    },
+
+    ...
+
+    {
+        "id": "24",
+        "recipe_id": "2",
+        "appliance": "",
+        "position": "12",
+        "temperature": "",
+        "text": "Enjoy!"
+    }
+]</code></pre>
+                                </div><!--//code-block-->
+
+                            </div>
+
+                            <div class="section-block">
+                                <h3>[OPEN]<code>POST/GET /recipes</code></h3>
+                                <p>
+                                    Returns full recipes data. Takes 2 'form-data' arguments:
+                                </p>
+                                <p>
+                                    <code>offset</code> - integer lower limit index of the recipe collection
+                                </p>
+                                <p>
+                                    <code>limit</code> - integer upper limit of the recipe count
+                                </p>
+                                <p>
+                                    By default 'offset' is set to 0 and 'limit' to 20.
+                                </p>
+                                <div class="code-block">
+                                    <h6>Response payload example for offset == 0 and limit == 2</h6>
+                                    <pre><code class="language-javascript">{
+    "1": {
+        "name": "Caramel Pretzel Chocolate Chip Cookies",
+        "description": "",
+        "servings": "12",
+        "thumbnail": "https://img.buzzfeed.com/video-api-prod/assets/545dd684ec2e4ce1ba12afec4b6dbc59/BFV15930_CaramelPretzel_ChocolateChipCookies-Thumb1080.jpg",
+        "duration": "",
+        "ingredients": [
+            {
+                "name": "all-purpose flour",
+                "unit": "cup",
+                "quantity": 2,
+                "display": "2 cups all-purpose flour"
+            },
+            {
+                "name": "baking soda",
+                "unit": "teaspoon",
+                "quantity": 1,
+                "display": "1 teaspoon baking soda"
+            },
+            {
+                "name": "salt",
+                "unit": "teaspoon",
+                "quantity": 1,
+                "display": "1 teaspoon salt"
+            },
+            {
+                "name": "butter",
+                "unit": "cup",
+                "quantity": 1,
+                "display": "1 cup butter, softened"
+            },
+            {
+                "name": "brown sugar",
+                "unit": "cup",
+                "quantity": 1,
+                "display": "1 cup packed brown sugar"
+            },
+            {
+                "name": "granulated sugar",
+                "unit": "cup",
+                "quantity": 0,
+                "display": "½ cup granulated sugar"
+            },
+            {
+                "name": "vanilla extract",
+                "unit": "teaspoon",
+                "quantity": 1,
+                "display": "2 teaspoons vanilla extract"
+            },
+            {
+                "name": "large egg",
+                "unit": "",
+                "quantity": 2,
+                "display": "4 large eggs"
+            },
+            {
+                "name": "pretzel twist",
+                "unit": "cup",
+                "quantity": 2,
+                "display": "n/a"
+            },
+            {
+                "name": "chocolate chips",
+                "unit": "cup",
+                "quantity": 1,
+                "display": "1½ cups chocolate chips"
+            },
+            {
+                "name": "caramel candy",
+                "unit": "cup",
+                "quantity": 1,
+                "display": "1½ cups caramel candies, unwrapped"
+            }
+        ],
+        "instructions": {
+            "1": {
+                "text": "Preheat the oven to 400°F (200°C).",
+                "appliance": "oven",
+                "temperature": "400"
+            },
+            "2": {
+                "text": "In a medium bowl, whisk together the flour, baking soda, and salt. Set aside.",
+                "appliance": "",
+                "temperature": ""
+            },
+            "3": {
+                "text": "In a large bowl, beat together the butter, brown sugar, granulated sugar, and vanilla extract until smooth.",
+                "appliance": "",
+                "temperature": ""
+            },
+            "4": {
+                "text": "Add the eggs, 1 at a time, beating to incorporate before adding the next.",
+                "appliance": "",
+                "temperature": ""
+            },
+            "5": {
+                "text": "Add the flour mixture a bit at a time while beating, until it forms a smooth dough.",
+                "appliance": "",
+                "temperature": ""
+            },
+            "6": {
+                "text": "Add the pretzels to a zip-top bag and crush with a rolling pin.",
+                "appliance": "",
+                "temperature": ""
+            },
+            "7": {
+                "text": "Fold in the chocolate chips and crushed pretzels until evenly combined.",
+                "appliance": "",
+                "temperature": ""
+            },
+            "8": {
+                "text": "Press a caramel flat and place in the middle of a ball of dough, about 2 tablespoons.",
+                "appliance": "",
+                "temperature": ""
+            },
+            "9": {
+                "text": "Fold the dough around the caramel, using a bit more to seal if necessary. Place on a well-greased or parchment-lined baking sheet.",
+                "appliance": "",
+                "temperature": ""
+            },
+            "10": {
+                "text": "Bake for 8-10 minutes, then remove from the oven.",
+                "appliance": "",
+                "temperature": ""
+            },
+            "11": {
+                "text": "While still warm, press a single pretzel into the top of each cookie. Serve with a cold glass of milk or on their own!",
+                "appliance": "",
+                "temperature": ""
+            },
+            "12": {
+                "text": "Enjoy!",
+                "appliance": "",
+                "temperature": ""
+            }
+        }
+    },
+    "2": {
+        "name": "The Best Soft And Chewy Snickerdoodle Cookies",
+        "description": "",
+        "servings": "24",
+        "thumbnail": "https://img.buzzfeed.com/thumbnailer-prod-us-east-1/video-api/assets/96041.jpg",
+        "duration": "",
+        "ingredients": [
+            {
+                "name": "ground cinnamon",
+                "unit": "teaspoon",
+                "quantity": 2,
+                "display": "2 tablespoons ground cinnamon"
+            },
+            {
+                "name": "butter",
+                "unit": "cup",
+                "quantity": 1,
+                "display": "1 cup butter, softened"
+            },
+            {
+                "name": "vanilla",
+                "unit": "teaspoon",
+                "quantity": 2,
+                "display": "2 teaspoon vanilla"
+            },
+            {
+                "name": "sugar",
+                "unit": "cup",
+                "quantity": 1,
+                "display": "1 cup sugar"
+            },
+            {
+                "name": "brown sugar",
+                "unit": "cup",
+                "quantity": 0,
+                "display": "⅓ cup brown sugar"
+            },
+            {
+                "name": "egg",
+                "unit": "",
+                "quantity": 2,
+                "display": "2 eggs"
+            },
+            {
+                "name": "flour",
+                "unit": "cup",
+                "quantity": 3,
+                "display": "3 cups flour"
+            },
+            {
+                "name": "cream of tartar",
+                "unit": "teaspoon",
+                "quantity": 2,
+                "display": "2 teaspoons cream of tartar"
+            },
+            {
+                "name": "baking soda",
+                "unit": "teaspoon",
+                "quantity": 2,
+                "display": "1 teaspoon baking soda"
+            },
+            {
+                "name": "salt",
+                "unit": "teaspoon",
+                "quantity": 0,
+                "display": "¼ teaspoon salt"
+            }
+        ],
+        "instructions": {
+            "1": {
+                "text": "In a small bowl, mix together the ingredients for the cinnamon sugar mix until evenly incorporated. Set aside.",
+                "appliance": "",
+                "temperature": ""
+            },
+            "2": {
+                "text": "Now make the cookie dough, in a large mixing bowl, whip the butter with vanilla until light and fluffy.",
+                "appliance": "",
+                "temperature": ""
+            },
+            "3": {
+                "text": "Add the sugar and brown sugar and mix until well incorporated.",
+                "appliance": "",
+                "temperature": ""
+            },
+            "4": {
+                "text": "Add the eggs and stir until thoroughly incorporated.",
+                "appliance": "",
+                "temperature": ""
+            },
+            "5": {
+                "text": "Using a sift add the flour, cream of tartar, cinnamon, baking soda, and salt and sift into the dough. Combine until evenly mixed.",
+                "appliance": "",
+                "temperature": ""
+            },
+            "6": {
+                "text": "Cover with plastic wrap and chill.",
+                "appliance": "",
+                "temperature": ""
+            },
+            "7": {
+                "text": "Preheat the oven to 375˚F (190˚C).",
+                "appliance": "oven",
+                "temperature": "375"
+            },
+            "8": {
+                "text": "Using your hands roll dough into ping pong sized balls.",
+                "appliance": "",
+                "temperature": ""
+            },
+            "9": {
+                "text": "Dip the dough into cinnamon sugar mixture and roll around covering the dough ball completely.",
+                "appliance": "",
+                "temperature": ""
+            },
+            "10": {
+                "text": "Place cookie dough on parchment paper-lined baking sheet and bake for 10-12 minutes.",
+                "appliance": "",
+                "temperature": ""
+            },
+            "11": {
+                "text": "Allow to cool and serve.",
+                "appliance": "",
+                "temperature": ""
+            },
+            "12": {
+                "text": "Enjoy!",
+                "appliance": "",
+                "temperature": ""
+            }
+        }
+    }
+}</code></pre>
+                                </div><!--//code-block-->
+
+                            </div><!--//section-block-->
+
+                        </section><!--//doc-section-->
+
+                    </div><!--//content-inner-->
+                </div><!--//doc-content-->
+
+            </div><!--//doc-body-->
+        </div><!--//container-->
+    </div><!--//doc-wrapper-->
+</div><!--//page-wrapper-->
+
+<footer id="footer" class="footer text-center">
+    <div class="container">
+        <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+        <small class="copyright">Designed with <i class="fas fa-heart"></i> by <a href="https://themes.3rdwavemedia.com/" target="_blank">Xiaoying Riley</a> for developers</small>
+
+    </div><!--//container-->
+</footer><!--//footer-->
+
+
+<!-- Main Javascript -->
+<script type="text/javascript" src="assets/plugins/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/plugins/prism/prism.js"></script>
+<script type="text/javascript" src="assets/plugins/jquery-scrollTo/jquery.scrollTo.min.js"></script>
+<script type="text/javascript" src="assets/plugins/stickyfill/dist/stickyfill.min.js"></script>
+<script type="text/javascript" src="assets/js/main.js"></script>
+
+</body>
+</html>
+
